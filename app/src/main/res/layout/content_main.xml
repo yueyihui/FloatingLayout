@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.github.lyue.myapplication.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <com.github.lyue.mylibrary.MyView
+        android:id="@+id/my_view_cc"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#fff0"
+        android:layout_marginTop="500dp"
+        android:layout_marginStart="500dp"
+        app:exampleColor="#33b5e5"
+        app:exampleDimension="24sp"
+        app:exampleDrawable="@android:drawable/ic_menu_add"
+        app:exampleString="Hello, MyView"/>
+
+
+</android.support.constraint.ConstraintLayout>
