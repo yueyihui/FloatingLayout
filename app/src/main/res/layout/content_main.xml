@@ -10,7 +10,7 @@
     tools:context="com.github.lyue.myapplication.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <com.github.lyue.mylibrary.MyView
+    <com.github.lyue.mylibrary.FloatingLayout
         android:id="@+id/my_view_cc"
         android:layout_width="100dp"
         android:layout_height="100dp"

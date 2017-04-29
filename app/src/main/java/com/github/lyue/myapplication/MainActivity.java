@@ -2,10 +2,6 @@ package com.github.lyue.myapplication;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,10 +12,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.github.lyue.mylibrary.MyView;
-import com.github.lyue.mylibrary.MyViewManager;
+import com.github.lyue.mylibrary.FloatingLayoutManager;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -40,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // default layout
-        MyViewManager.loadMyView(
+        FloatingLayoutManager.loadMyView(
                 (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)
                 , (ViewGroup) findViewById(R.id.content)
                 , true)
@@ -55,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // in this activity's layout
-        MyViewManager.findMyView(findViewById(R.id.my_view_cc)).
+        FloatingLayoutManager.findMyView(findViewById(R.id.my_view_cc)).
                 setMoveBounds((ViewGroup) findViewById(R.id.content)).
                 getMyView().
                 setOnClickListener(new View.OnClickListener() {

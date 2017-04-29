@@ -2,26 +2,22 @@ package com.github.lyue.mylibrary;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Debug;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 /**
  * TODO: document your custom view class.
  */
-public class MyView extends FrameLayout {
-    private static final String TAG = MyView.class.getSimpleName();
+public class FloatingLayout extends FrameLayout {
+    private static final String TAG = FloatingLayout.class.getSimpleName();
     private String mExampleString; // TODO: use a default from R.string...
     private int mExampleColor = Color.RED; // TODO: use a default from R.color...
     private float mExampleDimension = 0; // TODO: use a default from R.dimen...
@@ -33,7 +29,7 @@ public class MyView extends FrameLayout {
     private float mMoveX;
     private float mMoveY;
 
-    VelocityTracker mVelocityTracker;
+    private VelocityTracker mVelocityTracker;
 
     private int MOVE_STATE_MOVE_FROM_LEFT = 0x000F;
     private int MOVE_STATE_MOVE_FROM_RIGHT = 0x00F0;
@@ -50,7 +46,7 @@ public class MyView extends FrameLayout {
     private int BOTTOM = 0xF000;
     private int mBeyondCategory = NONE;
 
-    private static final int DELAY_TIME = 100;
+    private static final int DELAY_TIME = 250;
 
     private int mTouchSlop = 6;
     private float mOtherSideX;
@@ -60,17 +56,17 @@ public class MyView extends FrameLayout {
     private Rect mCurrentHitRect; //Current position from parent
     private ViewGroup mBoundsView;
 
-    public MyView(Context context) {
+    public FloatingLayout(Context context) {
         super(context);
         init(null, 0);
     }
 
-    public MyView(Context context, AttributeSet attrs) {
+    public FloatingLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public MyView(Context context, AttributeSet attrs, int defStyle) {
+    public FloatingLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
@@ -158,11 +154,12 @@ public class MyView extends FrameLayout {
                                 .start();
                     }
                 } else if (isBeyondMiddleLine()) {
-                    if (compareHorizontalToVertical()) {
+                    moveToHorizontalOtherSide();
+                    /*if (compareHorizontalToVertical()) {
                         moveToHorizontalOtherSide();
                     } else {
                         moveToVerticalOtherSide();
-                    }
+                    }*/
                 } else {
                     resetPosition();
                 }
@@ -207,9 +204,10 @@ public class MyView extends FrameLayout {
     }
 
     private boolean isBeyondMiddleLine() {
-        boolean h = isBeyondHorizontal();
+        /*boolean h = isBeyondHorizontal();
         boolean v = isBeyondVertical();
-        return  h || v;
+        return  h || v;*/
+        return isBeyondHorizontal();
     }
 
     private boolean isBeyondHorizontal() {
@@ -231,7 +229,7 @@ public class MyView extends FrameLayout {
     }
 
     private boolean isFromLeft() {
-        return (mMoveState & MOVE_STATE_MOVE_FROM_LEFT)== MOVE_STATE_MOVE_FROM_LEFT;
+        return (mMoveState & MOVE_STATE_MOVE_FROM_LEFT) == MOVE_STATE_MOVE_FROM_LEFT;
     }
 
     private boolean isBeyondVertical() {
@@ -326,23 +324,25 @@ public class MyView extends FrameLayout {
     private void init(AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.MyView, defStyle, 0);
+                attrs, R.styleable.FloatingLayout, defStyle, 0);
 
         mExampleString = a.getString(
-                R.styleable.MyView_exampleString);
+                R.styleable.FloatingLayout_exampleString);
         mExampleColor = a.getColor(
-                R.styleable.MyView_exampleColor,
+                R.styleable.FloatingLayout_exampleColor,
                 mExampleColor);
         // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
         // values that should fall on pixel boundaries.
         mExampleDimension = a.getDimension(
-                R.styleable.MyView_exampleDimension,
+                R.styleable.FloatingLayout_exampleDimension,
                 mExampleDimension);
 
-        if (a.hasValue(R.styleable.MyView_exampleDrawable)) {
+        if (a.hasValue(R.styleable.FloatingLayout_exampleDrawable)) {
             mExampleDrawable = a.getDrawable(
-                    R.styleable.MyView_exampleDrawable);
-            mExampleDrawable.setCallback(this);
+                    R.styleable.FloatingLayout_exampleDrawable);
+            if (mExampleDrawable != null) {
+                mExampleDrawable.setCallback(this);
+            }
         }
 
         a.recycle();
